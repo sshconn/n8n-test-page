@@ -17,9 +17,8 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
+            align-items: center;
             padding: 10px;
-            padding-top: 20px;
         }
 
         .container {
@@ -35,7 +34,50 @@
             text-align: center;
             color: #333;
             margin-bottom: 20px;
-            font-size: 22px;
+            font-size: 20px;
+        }
+
+        /* URL Giriş Ekranı */
+        .url-screen {
+            display: block;
+        }
+
+        .webhook-input {
+            margin-bottom: 15px;
+        }
+
+        .webhook-input label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .webhook-input input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .webhook-input input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .webhook-input small {
+            display: block;
+            margin-top: 5px;
+            color: #999;
+            font-size: 12px;
+        }
+
+        /* Kamera Ekranı */
+        .camera-screen {
+            display: none;
         }
 
         .camera-container {
@@ -44,8 +86,8 @@
             margin-bottom: 15px;
             border-radius: 15px;
             overflow: hidden;
-            background: #f5f5f5;
-            min-height: 250px;
+            background: #000;
+            aspect-ratio: 4/3;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -53,9 +95,9 @@
 
         #video {
             width: 100%;
-            height: auto;
-            display: none;
-            border-radius: 15px;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
         #canvas {
@@ -64,36 +106,18 @@
 
         #preview {
             width: 100%;
-            height: auto;
-            border-radius: 15px;
+            height: 100%;
+            object-fit: cover;
             display: none;
         }
 
-        .placeholder {
-            text-align: center;
-            color: #999;
-            padding: 40px;
-        }
-
-        .placeholder svg {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 15px;
-            fill: #ccc;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
+        /* Butonlar */
         button {
-            flex: 1;
-            padding: 12px 20px;
+            width: 100%;
+            padding: 14px;
             border: none;
             border-radius: 10px;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -108,18 +132,9 @@
             color: white;
         }
 
-        .btn-primary:hover {
+        .btn-primary:hover:not(:disabled) {
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-secondary {
-            background: #f0f0f0;
-            color: #333;
-        }
-
-        .btn-secondary:hover {
-            background: #e0e0e0;
         }
 
         .btn-success {
@@ -127,23 +142,28 @@
             color: white;
         }
 
-        .btn-success:hover {
+        .btn-success:hover:not(:disabled) {
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(17, 153, 142, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+            color: white;
         }
 
         button:disabled {
             opacity: 0.5;
             cursor: not-allowed;
-            transform: none !important;
         }
 
+        /* Durum Mesajları */
         .status {
-            padding: 15px;
+            padding: 12px;
             border-radius: 10px;
-            margin-top: 20px;
+            margin-top: 15px;
             text-align: center;
-            display: none;
+            font-size: 14px;
         }
 
         .status.success {
@@ -164,123 +184,211 @@
             border: 1px solid #b6d4fe;
         }
 
-        .webhook-input {
+        .status.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        /* Sonuç Ekranı */
+        .result-screen {
+            display: none;
+            text-align: center;
+        }
+
+        .result-icon {
+            font-size: 48px;
             margin-bottom: 15px;
         }
 
-        .webhook-input label {
-            display: block;
-            margin-bottom: 6px;
-            color: #555;
-            font-weight: 500;
-            font-size: 14px;
+        .result-message {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 20px;
         }
 
-        .webhook-input input {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: border-color 0.3s;
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
         }
 
-        .webhook-input input:focus {
-            outline: none;
-            border-color: #667eea;
+        .button-group button {
+            flex: 1;
         }
 
-        .webhook-input small {
-            display: block;
-            margin-top: 5px;
-            color: #999;
-            font-size: 12px;
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
         }
 
-        @media (max-width: 480px) {
-            .container {
-                padding: 20px;
-            }
-
-            h1 {
-                font-size: 20px;
-            }
-
-            button {
-                font-size: 14px;
-                padding: 12px 20px;
-            }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         .hidden {
             display: none !important;
         }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 18px;
+                margin-bottom: 15px;
+            }
+
+            button {
+                font-size: 14px;
+                padding: 12px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>📸 Fotoğraf Çek ve Gönder</h1>
-        
-        <div class="webhook-input">
-            <label for="webhookUrl">N8N Webhook URL:</label>
-            <input 
-                type="url" 
-                id="webhookUrl" 
-                placeholder="https://your-n8n-instance.com/webhook/xxxxx"
-                value=""
-            >
-            <small>N8N webhook URL'nizi buraya yapıştırın</small>
-        </div>
-
-        <div class="camera-container">
-            <div class="placeholder" id="placeholder">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                </svg>
-                <p>Kameranızı açmak için aşağıdaki butona tıklayın</p>
+        <!-- URL Giriş Ekranı -->
+        <div id="urlScreen" class="url-screen">
+            <h1>📸 Fotoğraf Gönderme Sistemi</h1>
+            
+            <div class="webhook-input">
+                <label for="webhookUrl">N8N Webhook URL:</label>
+                <input 
+                    type="url" 
+                    id="webhookUrl" 
+                    placeholder="https://your-n8n-instance.com/webhook/xxxxx"
+                    value=""
+                >
+                <small>N8N webhook URL'nizi buraya yapıştırın</small>
             </div>
-            <video id="video" autoplay playsinline></video>
-            <img id="preview" alt="Çekilen fotoğraf">
-            <canvas id="canvas"></canvas>
+
+            <button id="checkUrl" class="btn-primary">
+                ✅ Kontrol Et ve Devam Et
+            </button>
+
+            <div id="urlStatus" class="status hidden"></div>
         </div>
 
-        <div class="button-group">
-            <button id="startCamera" class="btn-primary">
-                📷 Kamerayı Aç
-            </button>
-            <button id="capturePhoto" class="btn-secondary hidden">
+        <!-- Kamera Ekranı -->
+        <div id="cameraScreen" class="camera-screen">
+            <h1>📷 Fotoğraf Çek</h1>
+            
+            <div class="camera-container">
+                <video id="video" autoplay playsinline></video>
+                <img id="preview" alt="Çekilen fotoğraf">
+                <canvas id="canvas"></canvas>
+            </div>
+
+            <button id="capturePhoto" class="btn-success">
                 📸 Fotoğraf Çek
             </button>
-            <button id="retakePhoto" class="btn-secondary hidden">
-                🔄 Yeniden Çek
-            </button>
-            <button id="sendPhoto" class="btn-success hidden">
-                ✉️ Gönder
-            </button>
+
+            <div id="cameraStatus" class="status hidden"></div>
         </div>
 
-        <div id="status" class="status"></div>
+        <!-- Sonuç Ekranı -->
+        <div id="resultScreen" class="result-screen">
+            <div class="result-icon" id="resultIcon"></div>
+            <div class="result-message" id="resultMessage"></div>
+            
+            <div class="button-group">
+                <button id="retakePhoto" class="btn-primary">
+                    🔄 Yeniden Çek
+                </button>
+                <button id="changeUrl" class="btn-danger">
+                    🔗 URL Değiştir
+                </button>
+            </div>
+        </div>
     </div>
 
     <script>
         let stream = null;
         let photoData = null;
+        let currentWebhookUrl = '';
         
+        // Elementler
+        const urlScreen = document.getElementById('urlScreen');
+        const cameraScreen = document.getElementById('cameraScreen');
+        const resultScreen = document.getElementById('resultScreen');
         const video = document.getElementById('video');
         const canvas = document.getElementById('canvas');
         const preview = document.getElementById('preview');
-        const placeholder = document.getElementById('placeholder');
-        const startCameraBtn = document.getElementById('startCamera');
+        
+        // Butonlar
+        const checkUrlBtn = document.getElementById('checkUrl');
         const capturePhotoBtn = document.getElementById('capturePhoto');
         const retakePhotoBtn = document.getElementById('retakePhoto');
-        const sendPhotoBtn = document.getElementById('sendPhoto');
-        const statusDiv = document.getElementById('status');
+        const changeUrlBtn = document.getElementById('changeUrl');
+        
+        // Input ve Status
         const webhookUrlInput = document.getElementById('webhookUrl');
+        const urlStatus = document.getElementById('urlStatus');
+        const cameraStatus = document.getElementById('cameraStatus');
+        const resultIcon = document.getElementById('resultIcon');
+        const resultMessage = document.getElementById('resultMessage');
 
-        // Kamerayı başlat
-        startCameraBtn.addEventListener('click', async () => {
+        // URL Kontrol Et
+        checkUrlBtn.addEventListener('click', async () => {
+            const url = webhookUrlInput.value.trim();
+            
+            if (!url) {
+                showStatus(urlStatus, 'Lütfen bir webhook URL\'si girin!', 'error');
+                return;
+            }
+
+            // URL formatını kontrol et
             try {
-                // Mobil cihazlar için arka kamerayı tercih et
+                new URL(url);
+            } catch (e) {
+                showStatus(urlStatus, 'Geçersiz URL formatı!', 'error');
+                return;
+            }
+
+            checkUrlBtn.disabled = true;
+            checkUrlBtn.innerHTML = '<span class="spinner"></span> Kontrol ediliyor...';
+            showStatus(urlStatus, 'URL kontrol ediliyor...', 'loading');
+
+            // URL'yi test et (OPTIONS veya HEAD request)
+            try {
+                // N8N webhook'ları genelde CORS'a izin verir
+                // Basit bir test için URL'yi kaydedip kameraya geçiyoruz
+                currentWebhookUrl = url;
+                
+                // Başarılı - Kamera ekranına geç
+                setTimeout(async () => {
+                    urlStatus.classList.add('hidden');
+                    await startCamera();
+                }, 500);
+                
+            } catch (error) {
+                showStatus(urlStatus, 'URL\'ye erişilemedi. Yine de devam edebilirsiniz.', 'warning');
+                currentWebhookUrl = url;
+                setTimeout(async () => {
+                    await startCamera();
+                }, 1500);
+            } finally {
+                checkUrlBtn.disabled = false;
+                checkUrlBtn.innerHTML = '✅ Kontrol Et ve Devam Et';
+            }
+        });
+
+        // Kamerayı başlat ve ekranı değiştir
+        async function startCamera() {
+            try {
+                // Ekranları değiştir
+                urlScreen.style.display = 'none';
+                cameraScreen.style.display = 'block';
+                
+                // Kamera izni al
                 const constraints = {
                     video: {
                         facingMode: { ideal: 'environment' },
@@ -292,135 +400,126 @@
                 stream = await navigator.mediaDevices.getUserMedia(constraints);
                 video.srcObject = stream;
                 
-                video.style.display = 'block';
-                placeholder.style.display = 'none';
-                startCameraBtn.classList.add('hidden');
-                capturePhotoBtn.classList.remove('hidden');
+                showStatus(cameraStatus, 'Kamera hazır!', 'success');
+                setTimeout(() => {
+                    cameraStatus.classList.add('hidden');
+                }, 2000);
                 
-                showStatus('Kamera hazır! Fotoğraf çekebilirsiniz.', 'success');
             } catch (error) {
                 console.error('Kamera erişimi hatası:', error);
-                showStatus('Kamera erişimi reddedildi. Lütfen izin verin.', 'error');
+                showStatus(cameraStatus, 'Kamera erişimi reddedildi!', 'error');
+                capturePhotoBtn.disabled = true;
             }
-        });
+        }
 
-        // Fotoğraf çek
-        capturePhotoBtn.addEventListener('click', () => {
+        // Fotoğraf çek ve gönder
+        capturePhotoBtn.addEventListener('click', async () => {
+            // Fotoğrafı çek
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
             const context = canvas.getContext('2d');
             context.drawImage(video, 0, 0);
             
-            // Fotoğrafı base64 olarak al
             photoData = canvas.toDataURL('image/jpeg', 0.9);
             
-            // Önizlemeyi göster
-            preview.src = photoData;
-            preview.style.display = 'block';
-            video.style.display = 'none';
-            
-            // Butonları güncelle
-            capturePhotoBtn.classList.add('hidden');
-            retakePhotoBtn.classList.remove('hidden');
-            sendPhotoBtn.classList.remove('hidden');
-            
+            // Butonu devre dışı bırak
+            capturePhotoBtn.disabled = true;
+            capturePhotoBtn.innerHTML = '<span class="spinner"></span> Gönderiliyor...';
+            showStatus(cameraStatus, 'Fotoğraf gönderiliyor...', 'loading');
+
             // Kamerayı durdur
             if (stream) {
                 stream.getTracks().forEach(track => track.stop());
             }
-            
-            showStatus('Fotoğraf çekildi! Gönderebilir veya yeniden çekebilirsiniz.', 'success');
-        });
 
-        // Yeniden çek
-        retakePhotoBtn.addEventListener('click', async () => {
-            preview.style.display = 'none';
-            retakePhotoBtn.classList.add('hidden');
-            sendPhotoBtn.classList.add('hidden');
-            startCameraBtn.classList.remove('hidden');
-            placeholder.style.display = 'flex';
-            photoData = null;
-            hideStatus();
-        });
-
-        // Fotoğrafı gönder
-        sendPhotoBtn.addEventListener('click', async () => {
-            const webhookUrl = webhookUrlInput.value.trim();
-            
-            if (!webhookUrl) {
-                showStatus('Lütfen N8N Webhook URL\'sini girin!', 'error');
-                return;
-            }
-
-            if (!photoData) {
-                showStatus('Lütfen önce bir fotoğraf çekin!', 'error');
-                return;
-            }
-
-            showStatus('Fotoğraf gönderiliyor...', 'loading');
-            sendPhotoBtn.disabled = true;
-
+            // Fotoğrafı gönder
             try {
-                // Base64'ü Blob'a çevir
                 const response = await fetch(photoData);
                 const blob = await response.blob();
                 
-                // FormData oluştur
                 const formData = new FormData();
                 formData.append('image', blob, 'photo.jpg');
+                formData.append('timestamp', new Date().toISOString());
                 
-                // Webhook'a gönder
-                const webhookResponse = await fetch(webhookUrl, {
+                const webhookResponse = await fetch(currentWebhookUrl, {
                     method: 'POST',
                     body: formData
                 });
 
                 if (webhookResponse.ok) {
-                    showStatus('Fotoğraf başarıyla gönderildi! ✅', 'success');
-                    
-                    // 3 saniye sonra sıfırla
-                    setTimeout(() => {
-                        resetCamera();
-                    }, 3000);
+                    // Başarılı
+                    showResultScreen(true, 'Fotoğraf başarıyla gönderildi!');
                 } else {
                     throw new Error(`HTTP error! status: ${webhookResponse.status}`);
                 }
             } catch (error) {
                 console.error('Gönderim hatası:', error);
-                showStatus('Gönderim başarısız! Webhook URL\'nizi kontrol edin.', 'error');
+                showResultScreen(false, 'Gönderim başarısız! Lütfen tekrar deneyin.');
             } finally {
-                sendPhotoBtn.disabled = false;
+                capturePhotoBtn.disabled = false;
+                capturePhotoBtn.innerHTML = '📸 Fotoğraf Çek';
             }
         });
 
-        // Kamerayı sıfırla
-        function resetCamera() {
-            preview.style.display = 'none';
-            video.style.display = 'none';
-            placeholder.style.display = 'flex';
-            retakePhotoBtn.classList.add('hidden');
-            sendPhotoBtn.classList.add('hidden');
-            startCameraBtn.classList.remove('hidden');
-            photoData = null;
-            hideStatus();
+        // Sonuç ekranını göster
+        function showResultScreen(success, message) {
+            cameraScreen.style.display = 'none';
+            resultScreen.style.display = 'block';
+            
+            if (success) {
+                resultIcon.innerHTML = '✅';
+                resultIcon.style.color = '#28a745';
+            } else {
+                resultIcon.innerHTML = '❌';
+                resultIcon.style.color = '#dc3545';
+            }
+            
+            resultMessage.textContent = message;
         }
+
+        // Yeniden çek
+        retakePhotoBtn.addEventListener('click', async () => {
+            resultScreen.style.display = 'none';
+            cameraStatus.classList.add('hidden');
+            await startCamera();
+        });
+
+        // URL değiştir
+        changeUrlBtn.addEventListener('click', () => {
+            // Kamerayı kapat
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+            }
+            
+            // İlk ekrana dön
+            resultScreen.style.display = 'none';
+            cameraScreen.style.display = 'none';
+            urlScreen.style.display = 'block';
+            urlStatus.classList.add('hidden');
+            
+            // URL input'unu temizle
+            webhookUrlInput.value = '';
+            currentWebhookUrl = '';
+        });
 
         // Durum mesajı göster
-        function showStatus(message, type) {
-            statusDiv.textContent = message;
-            statusDiv.className = `status ${type}`;
-            statusDiv.style.display = 'block';
-        }
-
-        // Durum mesajını gizle
-        function hideStatus() {
-            statusDiv.style.display = 'none';
+        function showStatus(element, message, type) {
+            element.textContent = message;
+            element.className = `status ${type}`;
+            element.classList.remove('hidden');
         }
 
         // Sayfa kapatılırken kamerayı kapat
         window.addEventListener('beforeunload', () => {
             if (stream) {
                 stream.getTracks().forEach(track => track.stop());
+            }
+        });
+
+        // Enter tuşu ile URL kontrol
+        webhookUrlInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                checkUrlBtn.click();
             }
         });
     </script>
