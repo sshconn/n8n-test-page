@@ -90,27 +90,37 @@
         .camera-screen {
             display: none;
             height: 100vh;
+            width: 100vw;
+            background: white;
+            padding: 0;
+            margin: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
             display: flex;
             flex-direction: column;
-            padding: 0;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .camera-screen h1 {
-            padding: 15px 20px 10px 20px;
-            margin: 0;
-            flex-shrink: 0;
+            display: none;
         }
 
         .camera-container {
             position: relative;
-            width: 100%;
-            flex: 1;
-            border-radius: 0;
+            width: calc(100vw - 20px);
+            max-width: 408px;
+            height: calc(100vh - 100px);
+            max-height: 855px;
+            margin: 10px auto 0 auto;
+            border-radius: 15px;
             overflow: hidden;
             background: #000;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
         }
 
         #video {
@@ -132,17 +142,34 @@
         }
 
         .camera-controls {
-            padding: 15px 20px 20px 20px;
-            flex-shrink: 0;
-            background: white;
+            padding: 15px 0 25px 0;
+            width: 100%;
+            max-width: 328px;
+            background: transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .camera-controls button {
             width: 100%;
+            max-width: 328px;
+            height: 50px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            box-shadow: 0 4px 15px rgba(17, 153, 142, 0.3);
+        }
+
+        .camera-controls button:active {
+            transform: scale(0.98);
         }
 
         #cameraStatus {
             margin-top: 10px;
+            max-width: 328px;
+            width: 100%;
         }
 
         /* Butonlar */
@@ -286,18 +313,14 @@
         }
 
         @media (max-width: 480px) {
-            .container {
-                padding: 15px;
+            .camera-container {
+                border-radius: 12px;
+                width: calc(100vw - 15px);
             }
-
-            h1 {
-                font-size: 18px;
-                margin-bottom: 15px;
-            }
-
-            button {
-                font-size: 14px;
-                padding: 12px;
+            
+            .camera-controls button {
+                height: 45px;
+                font-size: 15px;
             }
         }
     </style>
@@ -330,8 +353,6 @@
 
         <!-- Kamera Ekranı -->
         <div id="cameraScreen" class="camera-screen">
-            <h1>📷 Fotoğraf Çek</h1>
-            
             <div class="camera-container">
                 <video id="video" autoplay playsinline></video>
                 <img id="preview" alt="Çekilen fotoğraf">
