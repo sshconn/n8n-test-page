@@ -15,19 +15,16 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 10px;
+            margin: 0;
+            padding: 0;
         }
 
         .container {
             background: white;
-            border-radius: 20px;
-            padding: 20px;
-            max-width: 500px;
+            min-height: 100vh;
             width: 100%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
         }
 
         h1 {
@@ -39,7 +36,21 @@
 
         /* URL Giriş Ekranı */
         .url-screen {
-            display: block;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .url-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px 20px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
 
         .webhook-input {
@@ -78,16 +89,25 @@
         /* Kamera Ekranı */
         .camera-screen {
             display: none;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+        }
+
+        .camera-screen h1 {
+            padding: 15px 20px 10px 20px;
+            margin: 0;
+            flex-shrink: 0;
         }
 
         .camera-container {
             position: relative;
             width: 100%;
-            margin-bottom: 15px;
-            border-radius: 15px;
+            flex: 1;
+            border-radius: 0;
             overflow: hidden;
             background: #000;
-            aspect-ratio: 4/3;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -109,6 +129,20 @@
             height: 100%;
             object-fit: cover;
             display: none;
+        }
+
+        .camera-controls {
+            padding: 15px 20px 20px 20px;
+            flex-shrink: 0;
+            background: white;
+        }
+
+        .camera-controls button {
+            width: 100%;
+        }
+
+        #cameraStatus {
+            margin-top: 10px;
         }
 
         /* Butonlar */
@@ -194,6 +228,21 @@
         .result-screen {
             display: none;
             text-align: center;
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .result-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px 20px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
 
         .result-icon {
@@ -257,24 +306,26 @@
     <div class="container">
         <!-- URL Giriş Ekranı -->
         <div id="urlScreen" class="url-screen">
-            <h1>📸 Fotoğraf Gönderme Sistemi</h1>
-            
-            <div class="webhook-input">
-                <label for="webhookUrl">N8N Webhook URL:</label>
-                <input 
-                    type="url" 
-                    id="webhookUrl" 
-                    placeholder="https://your-n8n-instance.com/webhook/xxxxx"
-                    value=""
-                >
-                <small>N8N webhook URL'nizi buraya yapıştırın</small>
+            <div class="url-content">
+                <h1>📸 Fotoğraf Gönderme Sistemi</h1>
+                
+                <div class="webhook-input">
+                    <label for="webhookUrl">N8N Webhook URL:</label>
+                    <input 
+                        type="url" 
+                        id="webhookUrl" 
+                        placeholder="https://your-n8n-instance.com/webhook/xxxxx"
+                        value=""
+                    >
+                    <small>N8N webhook URL'nizi buraya yapıştırın</small>
+                </div>
+
+                <button id="checkUrl" class="btn-primary">
+                    ✅ Kontrol Et ve Devam Et
+                </button>
+
+                <div id="urlStatus" class="status hidden"></div>
             </div>
-
-            <button id="checkUrl" class="btn-primary">
-                ✅ Kontrol Et ve Devam Et
-            </button>
-
-            <div id="urlStatus" class="status hidden"></div>
         </div>
 
         <!-- Kamera Ekranı -->
@@ -287,25 +338,28 @@
                 <canvas id="canvas"></canvas>
             </div>
 
-            <button id="capturePhoto" class="btn-success">
-                📸 Fotoğraf Çek
-            </button>
-
-            <div id="cameraStatus" class="status hidden"></div>
+            <div class="camera-controls">
+                <button id="capturePhoto" class="btn-success">
+                    📸 Fotoğraf Çek
+                </button>
+                <div id="cameraStatus" class="status hidden"></div>
+            </div>
         </div>
 
         <!-- Sonuç Ekranı -->
         <div id="resultScreen" class="result-screen">
-            <div class="result-icon" id="resultIcon"></div>
-            <div class="result-message" id="resultMessage"></div>
-            
-            <div class="button-group">
-                <button id="retakePhoto" class="btn-primary">
-                    🔄 Yeniden Çek
-                </button>
-                <button id="changeUrl" class="btn-danger">
-                    🔗 URL Değiştir
-                </button>
+            <div class="result-content">
+                <div class="result-icon" id="resultIcon"></div>
+                <div class="result-message" id="resultMessage"></div>
+                
+                <div class="button-group">
+                    <button id="retakePhoto" class="btn-primary">
+                        🔄 Yeniden Çek
+                    </button>
+                    <button id="changeUrl" class="btn-danger">
+                        🔗 URL Değiştir
+                    </button>
+                </div>
             </div>
         </div>
     </div>
