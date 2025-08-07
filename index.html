@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Fotoğraf Gönderme Sistemi</title>
     <style>
         * {
@@ -226,8 +226,8 @@
             position: relative;
             width: calc(100vw - 20px);
             max-width: 408px;
-            height: calc(100vh - 120px);
-            max-height: 855px;
+            height: calc(100vh - 180px);
+            max-height: 750px;
             margin: 60px auto 0 auto;
             border-radius: 20px;
             overflow: hidden;
@@ -258,15 +258,16 @@
 
         .camera-controls {
             position: absolute;
-            bottom: 0;
+            bottom: 30px;
             left: 0;
             right: 0;
-            padding: 30px 20px;
-            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            padding: 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.7), transparent);
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
+            padding-bottom: env(safe-area-inset-bottom, 30px);
         }
 
         .capture-btn {
@@ -442,6 +443,20 @@
 
             .camera-container {
                 border-radius: 16px;
+                height: calc(100vh - 220px);
+                max-height: 650px;
+            }
+            
+            .camera-controls {
+                bottom: 40px;
+                padding-bottom: calc(env(safe-area-inset-bottom, 20px) + 40px);
+            }
+        }
+
+        /* iPhone specific adjustments */
+        @supports (padding: max(0px)) {
+            .camera-controls {
+                padding-bottom: max(40px, env(safe-area-inset-bottom));
             }
         }
     </style>
