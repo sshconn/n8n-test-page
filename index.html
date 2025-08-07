@@ -414,13 +414,74 @@
 
         // Fotoğraf çek ve gönder
         capturePhotoBtn.addEventListener('click', async () => {
-            // Fotoğrafı çek
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            const context = canvas.getContext('2d');
-            context.drawImage(video, 0, 0);
+            // Video container'ın görünen boyutlarını al
+            const videoRect = video.getBoundingClientRect();
+            const videoDisplayWidth = videoRect.width;
+            const videoDisplayHeight = videoRect.height;
             
-            photoData = canvas.toDataURL('image/jpeg', 0.9);
+            // Video'nun gerçek boyutları
+            const videoActualWidth = video.videoWidth;
+            const videoActualHeight = video.videoHeight;
+            
+            // Aspect ratio'ları hesapla
+            const displayAspect = videoDisplayWidth / videoDisplayHeight;
+            const actualAspect = videoActualWidth / videoActualHeight;
+            
+            // Canvas boyutlarını ayarla (ekranda görünen boyuta göre)
+            // Maksimum çözünürlük sınırı koyalım (performans için)
+            const maxWidth = 1920;
+            const maxHeight = 1440;
+            
+            let canvasWidth, canvasHeight;
+            let sourceX = 0, sourceY = 0, sourceWidth = videoActualWidth, sourceHeight = videoActualHeight;
+            
+            if (actualAspect > displayAspect) {
+                // Video daha geniş, yanlarda kırpılıyor
+                sourceWidth = videoActualHeight * displayAspect;
+                sourceX = (videoActualWidth - sourceWidth) / 2;
+                
+                // Canvas boyutlarını ayarla
+                if (sourceWidth > maxWidth) {
+                    canvasWidth = maxWidth;
+                    canvasHeight = maxWidth / displayAspect;
+                } else {
+                    canvasWidth = sourceWidth;
+                    canvasHeight = videoActualHeight;
+                }
+            } else {
+                // Video daha uzun, üst/alttan kırpılıyor
+                sourceHeight = videoActualWidth / displayAspect;
+                sourceY = (videoActualHeight - sourceHeight) / 2;
+                
+                // Canvas boyutlarını ayarla
+                if (sourceHeight > maxHeight) {
+                    canvasHeight = maxHeight;
+                    canvasWidth = maxHeight * displayAspect;
+                } else {
+                    canvasWidth = videoActualWidth;
+                    canvasHeight = sourceHeight;
+                }
+            }
+            
+            // Canvas'ı ayarla ve görünen kısmı çiz
+            canvas.width = canvasWidth;
+            canvas.height = canvasHeight;
+            const context = canvas.getContext('2d');
+            
+            // Sadece ekranda görünen kısmı çiz
+            context.drawImage(
+                video,
+                sourceX, sourceY, sourceWidth, sourceHeight,  // Kaynak (video'dan alınacak alan)
+                0, 0, canvasWidth, canvasHeight               // Hedef (canvas'a çizilecek alan)
+            );
+            
+            // JPEG kalitesini biraz düşürelim, dosya boyutunu küçültmek için
+            photoData = canvas.toDataURL('image/jpeg', 0.85);
+            
+            // Debug için canvas boyutlarını console'a yazdır
+            console.log('Canvas boyutları:', canvas.width, 'x', canvas.height);
+            console.log('Video görünen boyut:', videoDisplayWidth, 'x', videoDisplayHeight);
+            console.log('Video gerçek boyut:', videoActualWidth, 'x', videoActualHeight);
             
             // Butonu devre dışı bırak
             capturePhotoBtn.disabled = true;
