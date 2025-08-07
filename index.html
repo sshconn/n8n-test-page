@@ -226,8 +226,8 @@
             position: relative;
             width: calc(100vw - 20px);
             max-width: 408px;
-            height: calc(100vh - 180px);
-            max-height: 750px;
+            height: calc(100vh - 190px);
+            max-height: 740px;
             margin: 60px auto 0 auto;
             border-radius: 20px;
             overflow: hidden;
@@ -280,6 +280,18 @@
             transition: all 0.3s ease;
             position: relative;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .capture-btn::after {
+            content: '';
+            width: 56px;
+            height: 56px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
         }
 
         .capture-btn:hover {
@@ -443,8 +455,8 @@
 
             .camera-container {
                 border-radius: 16px;
-                height: calc(100vh - 220px);
-                max-height: 650px;
+                height: calc(100vh - 230px);
+                max-height: 640px;
             }
             
             .camera-controls {
@@ -510,7 +522,7 @@
         </div>
 
         <div class="camera-controls">
-            <div class="capture-btn" id="capturePhoto"></div>
+            <button class="capture-btn" id="capturePhoto" type="button"></button>
         </div>
     </div>
 
